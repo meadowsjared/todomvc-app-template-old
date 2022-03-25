@@ -1,9 +1,14 @@
 <template>
-	<li :class="{ completed: props.todo.checked }">
+	<li :class="{ completed: checked }">
 		<div class="view">
-			<input class="toggle" type="checkbox" :checked="props.todo.checked" />
-			<label>{{ props.todo.message }}</label>
-			<button class="destroy"></button>
+			<input
+				class="toggle"
+				type="checkbox"
+				v-model="props.modelValue.checked"
+				@update:modelValue="toggleChecked"
+			/>
+			<label>{{ props.modelValue.message }}</label>
+			<button @click="destroy" class="destroy"></button>
 		</div>
 		<input class="edit" value="Create a TodoMVC template" />
 	</li>
@@ -12,6 +17,22 @@
 import type { PropType } from "vue";
 import type { Todo } from "../domain/Todo";
 const props = defineProps({
-	todo: { type: Object as PropType<Todo>, required: true },
+	modelValue: { type: Object as PropType<Todo>, required: true },
 });
+const emit = defineEmits(["update:modelValue", "destroyTodo"]);
+const checked = ref(props.modelValue.checked);
+// props.modelValue.checked = false;
+
+function toggleChecked() {
+	console.log("toggleChecked", props.modelValue.checked);
+	const newValue = props.modelValue;
+	newValue.checked = props.modelValue.checked;
+	checked.value = props.modelValue.checked;
+	emit("update:modelValue", newValue);
+}
+
+function destroy() {
+	emit("destroyTodo");
+	console.log("destroy", props.modelValue.id);
+}
 </script>

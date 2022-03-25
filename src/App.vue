@@ -11,7 +11,12 @@
 			<ul class="todo-list">
 				<!-- These are here just to show the structure of the list items -->
 				<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-				<Todo v-for="(todo, index) of todoArray" :key="index" :todo="todo" />
+				<Todo
+					v-for="(todo, index) of todoArray"
+					:key="todo.id"
+					v-model="todoArray[index]"
+					@destroy-todo="destroyTodo(index)"
+				/>
 			</ul>
 		</section>
 		<!-- This footer should be hidden by default and shown when there are todos -->
@@ -34,17 +39,27 @@
 			<button class="clear-completed">Clear completed</button>
 		</footer>
 	</section>
-	{{ todoArray.length }}
+	<div @click="showChecked">{{ todoArray.length }}</div>
 </template>
 
 <script setup lang="ts">
+import type { Ref } from "vue";
 import type { Todo } from "./domain/Todo";
-const todoArray: Todo[] = [
-	{ checked: true, message: "Stay Positive" },
-	{ checked: false, message: "Love Myself" },
-	{ checked: true, message: "Be Grateful" },
-];
+const todoArray: Ref<Todo[]> = ref([
+	{ checked: true, message: "Stay Positive", id: 0 },
+	{ checked: false, message: "Love Myself", id: 1 },
+	{ checked: true, message: "Be Grateful", id: 2 },
+]);
 const numbers = [1, 6, 4, 3, 23, 45, 76];
 let message: string = "hello world";
+
+function showChecked() {
+	console.log("showChecked");
+}
+
+function destroyTodo(index: number) {
+	todoArray.value.splice(index, 1);
+}
+
 console.log(message, 1, 5, numbers, todoArray);
 </script>
