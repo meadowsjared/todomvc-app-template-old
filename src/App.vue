@@ -48,10 +48,6 @@
 import type { Ref } from "vue";
 import type { Todo } from "./domain/Todo";
 
-const tasksLeft = computed(
-	() => todoArray.value.filter((todo) => !todo.checked).length
-);
-
 const todoArray: Ref<Todo[]> = ref([
 	{ checked: true, message: "Do Stuff", id: 0 },
 	{ checked: false, message: "Also things", id: 1 },
@@ -60,12 +56,27 @@ const todoArray: Ref<Todo[]> = ref([
 const numbers = [1, 6, 4, 3, 23, 45, 76];
 let message: string = "hello world";
 
+const tasksLeft = computed(
+	() => todoArray.value.filter((todo) => !todo.checked).length ?? 0
+);
+
+const numUpdates = ref(0);
+watch(
+	// watch this value:
+	() => tasksLeft.value,
+	// when it changes, do stuff:
+	() => {
+		numUpdates.value++;
+		console.log("tasksLeft changed", numUpdates.value);
+	}
+);
+
 function showChecked() {
 	console.log("showChecked");
 }
 
 function destroyTodo(index: number) {
-	todoArray.value.splice(index, 1);
+	todoArray.value.splice(index, 1); // remove the todo from the array
 }
 
 console.log(message, 1, 5, numbers, todoArray);
