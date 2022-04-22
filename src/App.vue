@@ -46,9 +46,9 @@
 import type { Ref } from "vue";
 import type { Todo } from "./domain/Todo";
 const todoArray: Ref<Todo[]> = ref([
-	{ checked: true, message: "Stay Positive", id: 0 },
-	{ checked: false, message: "Love Myself", id: 1 },
-	{ checked: true, message: "Be Grateful", id: 2 },
+	{ checked: true, message: "Do Stuff", id: 0 },
+	{ checked: false, message: "Also things", id: 1 },
+	{ checked: true, message: "Whatever", id: 2 },
 ]);
 const numbers = [1, 6, 4, 3, 23, 45, 76];
 let message: string = "hello world";
