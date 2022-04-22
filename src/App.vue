@@ -38,7 +38,9 @@
 				</li>
 			</ul>
 			<!-- Hidden if no completed items are left ↓ -->
-			<button class="clear-completed">Clear completed</button>
+			<button @click="clearCompleted" class="clear-completed">
+				Clear completed
+			</button>
 		</footer>
 	</section>
 	<div @click="showChecked">{{ todoArray.length }}</div>
@@ -77,6 +79,10 @@ function showChecked() {
 
 function destroyTodo(index: number) {
 	todoArray.value.splice(index, 1); // remove the todo from the array
+}
+
+function clearCompleted() {
+	todoArray.value = todoArray.value.filter((todo) => !todo.checked);
 }
 
 console.log(message, 1, 5, numbers, todoArray);
