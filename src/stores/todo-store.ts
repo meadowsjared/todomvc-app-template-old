@@ -14,8 +14,8 @@ export const useTodoStore = defineStore("todos", {
 		],
 	}),
 	getters: {
-		todos: (state) => state._todos,
-		tasksLeft: (state) =>
+		todos: (state: State) => state._todos,
+		tasksLeft: (state: State) =>
 			state._todos.filter((todo) => !todo.checked).length ?? 0,
 	},
 	actions: {
