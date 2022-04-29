@@ -23,7 +23,10 @@
 		<footer class="footer">
 			<!-- This should be `0 items left` by default -->
 			<span class="todo-count"
-				><strong>{{ tasksLeft }}</strong> item left</span
+				><strong>{{ tasksLeft }}</strong> item{{
+					tasksLeft === 1 ? "" : "s"
+				}}
+				left</span
 			>
 			<!-- Remove this if you don't implement routing -->
 			<ul class="filters">
@@ -57,6 +60,15 @@ const todoArray: Ref<Todo[]> = ref([
 ]);
 const numbers = [1, 6, 4, 3, 23, 45, 76];
 let message: string = "hello world";
+console.log("should I S?");
+
+let sMessage: string = message.length > 5 ? "yes" : "no";
+// if (message.length > 5) {
+// 	sMessage = "yes";
+// } else {
+// 	sMessage = "no";
+// }
+console.log("should I S?", sMessage);
 
 const tasksLeft = computed(
 	() => todoArray.value.filter((todo) => !todo.checked).length ?? 0
