@@ -12,9 +12,9 @@
 				<!-- These are here just to show the structure of the list items -->
 				<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
 				<Todo
-					v-for="(todo, index) of todoArray"
+					v-for="(todo, index) of todoStore.todos"
 					:key="todo.id"
-					v-model="todoArray[index]"
+					v-model="todoStore.todos[index]"
 					@destroy-todo="destroyTodo(index)"
 				/>
 			</ul>
@@ -23,8 +23,8 @@
 		<footer class="footer">
 			<!-- This should be `0 items left` by default -->
 			<span class="todo-count"
-				><strong>{{ tasksLeft }}</strong> item{{
-					tasksLeft === 1 ? "" : "s"
+				><strong>{{ todoStore.tasksLeft }}</strong> item{{
+					todoStore.tasksLeft === 1 ? "" : "s"
 				}}
 				left</span
 			>
@@ -46,18 +46,16 @@
 			</button>
 		</footer>
 	</section>
-	<div @click="showChecked">{{ todoArray.length }}</div>
+	<div @click="showChecked">{{ todoStore.todos.length }}</div>
 </template>
 
 <script setup lang="ts">
 import type { Ref } from "vue";
 import type { Todo } from "./domain/Todo";
+import { useTodoStore } from "./stores/todo-store";
 
-const todoArray: Ref<Todo[]> = ref([
-	{ checked: true, message: "Do Stuff", id: 0 },
-	{ checked: false, message: "Also things", id: 1 },
-	{ checked: true, message: "Whatever", id: 2 },
-]);
+const todoStore = useTodoStore();
+
 const numbers = [1, 6, 4, 3, 23, 45, 76];
 let message: string = "hello world";
 console.log("should I S?");
@@ -70,32 +68,32 @@ let sMessage: string = message.length > 5 ? "yes" : "no";
 // }
 console.log("should I S?", sMessage);
 
-const tasksLeft = computed(
-	() => todoArray.value.filter((todo) => !todo.checked).length ?? 0
-);
+// const tasksLeft = computed(
+// 	() => todoArray.value.filter((todo) => !todo.checked).length ?? 0
+// );
 
 const numUpdates = ref(0);
-watch(
-	// watch this value:
-	() => tasksLeft.value,
-	// when it changes, do stuff:
-	() => {
-		numUpdates.value++;
-		console.log("tasksLeft changed", numUpdates.value);
-	}
-);
+// watch(
+// 	// watch this value:
+// 	() => tasksLeft.value,
+// 	// when it changes, do stuff:
+// 	() => {
+// 		numUpdates.value++;
+// 		console.log("tasksLeft changed", numUpdates.value);
+// 	}
+// );
 
 function showChecked() {
 	console.log("showChecked");
 }
 
 function destroyTodo(index: number) {
-	todoArray.value.splice(index, 1); // remove the todo from the array
+	todoStore.destroyTodo(index);
 }
 
 function clearCompleted() {
-	todoArray.value = todoArray.value.filter((todo) => !todo.checked);
+	todoStore.clearCompleted();
 }
 
-console.log(message, 1, 5, numbers, todoArray);
+console.log(message, 1, 5, numbers, todoStore.todos);
 </script>
