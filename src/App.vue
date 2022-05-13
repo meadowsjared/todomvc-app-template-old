@@ -15,7 +15,7 @@
 					v-for="(todo, index) of todoStore.todos"
 					:key="todo.id"
 					v-model="todoStore.todos[index]"
-					@destroy-todo="destroyTodo(index)"
+					@destroy-todo="destroyTodo(todo)"
 				/>
 			</ul>
 		</section>
@@ -31,13 +31,34 @@
 			<!-- Remove this if you don't implement routing -->
 			<ul class="filters">
 				<li>
-					<a class="selected" href="#/">All</a>
+					<!-- <a
+						:class="{ selected: todoStore.filter === 'all' }"
+						@click="showAll"
+						href="#/"
+						>All</a
+					> -->
+					<Button
+						@click="setFilter"
+						:filter="todoStore.filter"
+						label="All"
+						active-value="all"
+					/>
 				</li>
 				<li>
-					<a href="#/active">Active</a>
+					<Button
+						@click="setFilter"
+						:filter="todoStore.filter"
+						label="Active"
+						active-value="active"
+					/>
 				</li>
 				<li>
-					<a href="#/completed">Completed</a>
+					<Button
+						@click="setFilter"
+						:filter="todoStore.filter"
+						label="Completed"
+						active-value="completed"
+					/>
 				</li>
 			</ul>
 			<!-- Hidden if no completed items are left ↓ -->
@@ -55,6 +76,7 @@ import type { Todo } from "./domain/Todo";
 import { useTodoStore } from "./stores/todo-store";
 
 const todoStore = useTodoStore();
+todoStore.loadData();
 
 const numbers = [1, 6, 4, 3, 23, 45, 76];
 let message: string = "hello world";
@@ -87,12 +109,28 @@ function showChecked() {
 	console.log("showChecked");
 }
 
-function destroyTodo(index: number) {
-	todoStore.destroyTodo(index);
+function destroyTodo(todo: Todo) {
+	todoStore.destroyTodo(todo);
 }
 
 function clearCompleted() {
 	todoStore.clearCompleted();
+}
+
+function showAll() {
+	todoStore.setFilter("all");
+}
+
+function showActive() {
+	todoStore.setFilter("active");
+}
+
+function showCompleted() {
+	todoStore.setFilter("completed");
+}
+
+function setFilter(filter: string) {
+	todoStore.setFilter(filter);
 }
 
 console.log(message, 1, 5, numbers, todoStore.todos);
