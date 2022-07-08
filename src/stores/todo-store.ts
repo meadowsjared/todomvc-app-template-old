@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type Todo from "../domain/Todo";
+import type { Todo } from "../domain/Todo";
 
 interface State {
 	_sourceTodos: Todo[];

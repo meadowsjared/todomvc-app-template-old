@@ -1,6 +1,10 @@
 {
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "lint": "eslint --ext .vue,.ts,.js src",
+    "check": "run-s check:* lint",
+    "check:vue": "vue-tsc --noEmit",
+    "check:eslint": "eslint src"
   },
   "private": true,
   "dependencies": {
@@ -11,10 +15,23 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
     "pnpm": "^6.32.2",
     "typescript": "^4.6.2",
     "unplugin-auto-import": "^0.4.13",
     "unplugin-vue-components": "^0.19.3",
+    "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-compat": "^4.0.2",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unicorn": "^42.0.0",
+    "eslint-plugin-vue": "^9.0.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.6.2",
     "vite": "^2.8.6",
     "vite-plugin-html": "^2.1.1",
     "vite-plugin-rewrite-all": "^0.1.2",
