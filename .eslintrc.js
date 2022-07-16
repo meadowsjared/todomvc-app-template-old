@@ -45,7 +45,8 @@ module.exports = {
 		".eslintrc.js",
 		"src/proto.js",
 		"src/proto.d.ts",
-		"components.d.ts",
+		"src/auto-imports.d.ts",
+		"src/components.d.ts",
 	],
 
 	rules: {
