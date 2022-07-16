@@ -45,7 +45,8 @@ module.exports = {
 		".eslintrc.js",
 		"src/proto.js",
 		"src/proto.d.ts",
-		"components.d.ts",
+		"src/auto-imports.d.ts",
+		"src/components.d.ts",
 	],
 
 	rules: {
@@ -117,6 +118,7 @@ module.exports = {
 			parser: "vue-eslint-parser",
 			parserOptions: {
 				parser: "@typescript-eslint/parser",
+				// eslint-disable-next-line unicorn/prefer-module
 				tsconfigRootDir: __dirname,
 				project: ["./tsconfig.json"],
 			},
