@@ -50,13 +50,3 @@
 		</footer>
 	</section>
 </template>
-<script setup lang="ts">
-import { ToDo } from "./domain/ToDo";
-const asdf: ToDo[] = [
-	{
-		checked: true,
-		message: "Hello world",
-	},
-];
-console.log("hi from App.vue", asdf);
-</script>
