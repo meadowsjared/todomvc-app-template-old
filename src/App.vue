@@ -15,7 +15,7 @@
 					<div class="view">
 						<input class="toggle" type="checkbox" checked />
 						<label>Taste JavaScript</label>
-						<button class="destroy"></button>
+						<button type="button" class="destroy"></button>
 					</div>
 					<input class="edit" value="Create a TodoMVC template" />
 				</li>
@@ -23,7 +23,7 @@
 					<div class="view">
 						<input class="toggle" type="checkbox" />
 						<label>Buy a unicorn</label>
-						<button class="destroy"></button>
+						<button type="button" class="destroy"></button>
 					</div>
 					<input class="edit" value="Rule the web" />
 				</li>
@@ -46,7 +46,7 @@
 				</li>
 			</ul>
 			<!-- Hidden if no completed items are left ↓ -->
-			<button class="clear-completed">Clear completed</button>
+			<button type="button" class="clear-completed">Clear completed</button>
 		</footer>
 	</section>
 </template>
