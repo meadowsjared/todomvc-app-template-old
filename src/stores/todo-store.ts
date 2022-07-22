@@ -1,11 +1,15 @@
 import { defineStore } from "pinia";
 import type { Todo } from "../domain/Todo";
+import { SortState } from "../domain/Todo";
 
 interface State {
 	_sourceTodos: Todo[];
 	_displayedTodos: Todo[];
 	_filter: string;
+	_sort: SortState;
 }
+
+function sortTodos() {}
 
 export const useTodoStore = defineStore("todos", {
 	state: (): State => ({
@@ -16,9 +20,12 @@ export const useTodoStore = defineStore("todos", {
 		],
 		_displayedTodos: [],
 		_filter: "all",
+		_sort: SortState.UNSORTED,
 	}),
 	getters: {
 		todos: (state: State) => {
+			// const sortedTodos = state._displayedTodos.sort(sortTodos);
+
 			switch (state._filter) {
 				case "active":
 					return state._displayedTodos.filter((todo) => todo.active); // Active
@@ -51,6 +58,9 @@ export const useTodoStore = defineStore("todos", {
 		},
 		setFilter(filter: string) {
 			this._filter = filter;
+		},
+		setSort(sortState: SortState) {
+			this._sort = sortState;
 		},
 	},
 });

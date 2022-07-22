@@ -4,3 +4,9 @@ export interface Todo {
 	id: number;
 	active: boolean;
 }
+
+export enum SortState {
+	UNSORTED,
+	ASCENDING,
+	DESCENDING,
+}
