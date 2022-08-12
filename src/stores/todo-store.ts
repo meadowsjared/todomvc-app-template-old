@@ -9,7 +9,11 @@ interface State {
 	_sort: SortState;
 }
 
-function sortTodos() {}
+function sortTodos(a: Todo, b: Todo) {
+	if (a.checked === b.checked) return 0;
+	if (a.checked) return -1;
+	return 1;
+}
 
 export const useTodoStore = defineStore("todos", {
 	state: (): State => ({
@@ -24,7 +28,7 @@ export const useTodoStore = defineStore("todos", {
 	}),
 	getters: {
 		todos: (state: State) => {
-			// const sortedTodos = state._displayedTodos.sort(sortTodos);
+			const sortedTodos = state._displayedTodos.sort(sortTodos);
 
 			switch (state._filter) {
 				case "active":
