@@ -89,6 +89,53 @@ let sMessage: string = message.length > 5 ? "yes" : "no";
 // } else {
 // 	sMessage = "no";
 // }
+
+/**
+ * Write a function that, given two strings, can detect if they are anagrams of each other.
+ * For example: Given the input "heart" and "earth", the function should return true because their letters can be rearranged to create each other.
+ */
+function isAnagram(string1: string, string2: string): boolean {
+	// sort both strings
+	if (string1.length !== string2.length) return false;
+	const string1Sorted = string1.split("").sort().join(""); //get a sorted version of string1
+	const string2Sorted = string2.split("").sort().join(""); //get a sorted version of string1
+	return string1Sorted === string2Sorted;
+	// are the strings equal
+}
+
+console.log("heart is anagram of earth?", isAnagram("heart", "earth"));
+console.log("stuff is anagram of things?", isAnagram("stuff", "things"));
+
+// function isAnagram(string1: string, string2: string): boolean {
+// 	// 1 get unique letters
+// 	const string1Letters = getUniqueLettersWithCount(string1);
+// 	// 2 sort them (and count them)
+// 	string1Letters.sort(letterCompare);
+// 	// 3 go through and see if there's a diffence, return false if there is
+// 	string1Letters.forEach((letter, index) => {
+// 			return false;
+// 	});
+// 	// otherwise return true
+// }
+
+// interface LetterCount {
+// 	letter: string;
+// 	count: number;
+// }
+
+// function getUniqueLetters(compareString: string): LetterCount[] {
+// 	const letters = compareString.split(""); // split the string into an array of letters
+// 	const uniqueLetters = letters.filter((letter, index) => {
+// 		return letters.indexOf(letter) === index;
+// 	});
+// 	return uniqueLetters.map((value, index) => {
+// 		return {
+// 			letter: value,
+// 			count: compareString
+// 		}
+// 	}
+// }
+
 console.log("should I S?", sMessage);
 
 // const tasksLeft = computed(
