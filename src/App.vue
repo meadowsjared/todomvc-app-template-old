@@ -191,7 +191,16 @@ function setFilter(filter: string) {
 
 function sortTodos() {
 	sortState.value = (sortState.value + 1) % 3;
-	console.log("sortTodos", sortState.value);
+	if (sortState.value === SortState.UNSORTED) {
+		console.log("sortTodos", "SortState.UNSORTED");
+	}
+	if (sortState.value === SortState.ASCENDING) {
+		console.log("sortTodos", "SortState.ASCENDING");
+	}
+	if (sortState.value === SortState.DESCENDING) {
+		console.log("sortTodos", "SortState.DESCENDING");
+	}
+
 	todoStore.setSort(sortState.value);
 }
 
