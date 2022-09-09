@@ -111,7 +111,7 @@ console.log("stuff is anagram of things?", isAnagram("stuff", "things"));
 // 	const string1Letters = getUniqueLettersWithCount(string1);
 // 	// 2 sort them (and count them)
 // 	string1Letters.sort(letterCompare);
-// 	// 3 go through and see if there's a diffence, return false if there is
+// 	// 3 go through and see if there's a difference, return false if there is
 // 	string1Letters.forEach((letter, index) => {
 // 			return false;
 // 	});
