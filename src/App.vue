@@ -31,12 +31,6 @@
 			<!-- Remove this if you don't implement routing -->
 			<ul class="filters">
 				<li>
-					<!-- <a
-						:class="{ selected: todoStore.filter === 'all' }"
-						@click="showAll"
-						href="#/"
-						>All</a
-					> -->
 					<Button
 						@click="setFilter"
 						:filter="todoStore.filter"
@@ -84,11 +78,6 @@ let message: string = "hello world";
 console.log("should I S?");
 
 let sMessage: string = message.length > 5 ? "yes" : "no";
-// if (message.length > 5) {
-// 	sMessage = "yes";
-// } else {
-// 	sMessage = "no";
-// }
 
 /**
  * Write a function that, given two strings, can detect if they are anagrams of each other.
@@ -106,55 +95,11 @@ function isAnagram(string1: string, string2: string): boolean {
 console.log("heart is anagram of earth?", isAnagram("heart", "earth"));
 console.log("stuff is anagram of things?", isAnagram("stuff", "things"));
 
-// function isAnagram(string1: string, string2: string): boolean {
-// 	// 1 get unique letters
-// 	const string1Letters = getUniqueLettersWithCount(string1);
-// 	// 2 sort them (and count them)
-// 	string1Letters.sort(letterCompare);
-// 	// 3 go through and see if there's a difference, return false if there is
-// 	string1Letters.forEach((letter, index) => {
-// 			return false;
-// 	});
-// 	// otherwise return true
-// }
-
-// interface LetterCount {
-// 	letter: string;
-// 	count: number;
-// }
-
-// function getUniqueLetters(compareString: string): LetterCount[] {
-// 	const letters = compareString.split(""); // split the string into an array of letters
-// 	const uniqueLetters = letters.filter((letter, index) => {
-// 		return letters.indexOf(letter) === index;
-// 	});
-// 	return uniqueLetters.map((value, index) => {
-// 		return {
-// 			letter: value,
-// 			count: compareString
-// 		}
-// 	}
-// }
-
 console.log("should I S?", sMessage);
-
-// const tasksLeft = computed(
-// 	() => todoArray.value.filter((todo) => !todo.checked).length ?? 0
-// );
 
 const numUpdates = ref(0);
 
 const sortState = ref<SortState>(SortState.UNSORTED);
-
-// watch(
-// 	// watch this value:
-// 	() => tasksLeft.value,
-// 	// when it changes, do stuff:
-// 	() => {
-// 		numUpdates.value++;
-// 		console.log("tasksLeft changed", numUpdates.value);
-// 	}
-// );
 
 function showChecked() {
 	console.log("showChecked");
