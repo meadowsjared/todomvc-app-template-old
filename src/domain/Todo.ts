@@ -5,6 +5,11 @@ export interface Todo {
 	active: boolean;
 }
 
+export interface Label {
+	displayText: string;
+	value: string;
+}
+
 export enum SortState {
 	UNSORTED,
 	ASCENDING,

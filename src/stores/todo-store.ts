@@ -44,15 +44,21 @@ export const useTodoStore = defineStore("todos", {
 				active: true,
 			},
 			{
-				checked: true,
-				message: "figure out sorting",
+				checked: false,
+				message: "fix funky active junk",
 				id: 3,
 				active: true,
 			},
 			{
 				checked: true,
-				message: "sorting from chevron button",
+				message: "figure out sorting",
 				id: 4,
+				active: true,
+			},
+			{
+				checked: true,
+				message: "sorting from chevron button",
+				id: 5,
 				active: true,
 			},
 		],
@@ -68,9 +74,9 @@ export const useTodoStore = defineStore("todos", {
 
 			// filter the results
 			switch (state._filter) {
-				case "active":
-					return sortedTodos.filter((todo) => todo.active); // Active
-				case "completed":
+				case "unchecked": // unchecked todos
+					return sortedTodos.filter((todo) => !todo.checked); // Active
+				case "checked": // checked todos
 					return sortedTodos.filter((todo) => todo.checked); // completed
 				default: // all
 					return sortedTodos; // All
