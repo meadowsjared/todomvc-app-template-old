@@ -30,9 +30,19 @@ function sortTodos(a: Todo, b: Todo, sortState: SortState) {
 export const useTodoStore = defineStore("todos", {
 	state: (): State => ({
 		_sourceTodos: [
-			{ checked: true, message: "Do Stuff", id: 0, active: true },
-			{ checked: false, message: "Also things", id: 1, active: true },
-			{ checked: true, message: "Whatever", id: 2, active: true },
+			{ checked: false, message: "Eat Food", id: 0, active: true },
+			{
+				checked: true,
+				message: "Look at Noteworthy Trees",
+				id: 1,
+				active: true,
+			},
+			{
+				checked: false,
+				message: "Sleep at a REASONABLE Hour",
+				id: 2,
+				active: true,
+			},
 		],
 		_displayedTodos: [],
 		_filter: "all",
@@ -40,11 +50,9 @@ export const useTodoStore = defineStore("todos", {
 	}),
 	getters: {
 		todos: (state: State) => {
-			const sortDirection = state._sort;
-			console.log({ sort: sortDirection });
 			// sort it based on the current sort setting
 			const sortedTodos = state._displayedTodos;
-			sortedTodos.sort((a: Todo, b: Todo) => sortTodos(a, b, sortDirection));
+			sortedTodos.sort((a: Todo, b: Todo) => sortTodos(a, b, state._sort));
 
 			// filter the results
 			switch (state._filter) {
@@ -59,7 +67,6 @@ export const useTodoStore = defineStore("todos", {
 		tasksLeft: (state: State) =>
 			state._displayedTodos.filter((todo) => !todo.checked).length ?? 0,
 		filter: (state: State) => state._filter,
-		sort: (state: State) => state._sort,
 	},
 	actions: {
 		destroyTodo(todo: Todo) {
@@ -83,6 +90,12 @@ export const useTodoStore = defineStore("todos", {
 		},
 		setSort(sortState: SortState) {
 			this._sort = sortState;
+		},
+		updateTodo(newTodo: Todo) {
+			const index = this._displayedTodos.findIndex(
+				(pTodo) => newTodo.id === pTodo.id
+			);
+			this._displayedTodos[index] = newTodo;
 		},
 	},
 });
