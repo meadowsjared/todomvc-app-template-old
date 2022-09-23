@@ -108,6 +108,7 @@ export const useTodoStore = defineStore("todos", {
 				(pTodo) => newTodo.id === pTodo.id
 			);
 			this._displayedTodos[index] = newTodo;
+			// update persisted data
 		},
 	},
 });
