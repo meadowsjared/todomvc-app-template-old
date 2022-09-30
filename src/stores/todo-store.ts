@@ -7,6 +7,7 @@ interface State {
 	_displayedTodos: Todo[];
 	_filter: string;
 	_sort: SortState;
+	maxId: number;
 }
 
 function sortTodos(a: Todo, b: Todo, sortState: SortState) {
@@ -65,6 +66,7 @@ export const useTodoStore = defineStore("todos", {
 		_displayedTodos: [],
 		_filter: "all",
 		_sort: SortState.UNSORTED,
+		maxId: 50, //todo fix this! useTodoStore._sourceTodos.length
 	}),
 	getters: {
 		todos: (state: State) => {
@@ -115,6 +117,15 @@ export const useTodoStore = defineStore("todos", {
 			);
 			this._displayedTodos[index] = newTodo;
 			// update persisted data
+		},
+		addTodo(newTodo: string) {
+			this._displayedTodos.push({
+				checked: false,
+				message: newTodo,
+				active: true,
+				id: this.maxId++,
+			});
+			console.log("adding todo from Pinia", newTodo);
 		},
 	},
 });

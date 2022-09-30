@@ -2,7 +2,13 @@
 	<section class="todoapp">
 		<header class="header">
 			<h1>todos</h1>
-			<input class="new-todo" placeholder="What needs to be done?" autofocus />
+			<input
+				class="new-todo"
+				@keypress.enter="handleAddTodo"
+				placeholder="What needs to be done?"
+				autofocus
+				v-model="newTodo"
+			/>
 		</header>
 		<!-- This section should be hidden by default and shown when there are todos -->
 		<section class="main">
@@ -107,6 +113,7 @@ console.log("should I S?", sMessage);
 const numUpdates = ref(0);
 
 const sortState = ref<SortState>(SortState.UNSORTED);
+const newTodo = ref("");
 
 function showChecked() {
 	console.log("showChecked");
@@ -154,6 +161,12 @@ function sortTodos() {
 	}
 
 	todoStore.setSort(sortState.value);
+}
+
+function handleAddTodo() {
+	console.log("addTodo", newTodo.value);
+	todoStore.addTodo(newTodo.value);
+	newTodo.value = "";
 }
 
 console.log(message, 1, 5, numbers, todoStore.todos);
