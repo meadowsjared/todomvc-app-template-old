@@ -31,7 +31,7 @@ function sortTodos(a: Todo, b: Todo, sortState: SortState) {
 export const useTodoStore = defineStore("todos", {
 	state: (): State => ({
 		_sourceTodos: [
-			{ checked: false, message: "adding todos!", id: 0, active: true },
+			{ checked: true, message: "adding todos!", id: 0, active: true },
 			{
 				checked: false,
 				message: "add saving and persisting data",
@@ -39,7 +39,7 @@ export const useTodoStore = defineStore("todos", {
 				active: true,
 			},
 			{
-				checked: false,
+				checked: true,
 				message: "do fancy chevron-ing (CSS)",
 				id: 2,
 				active: true,
