@@ -66,14 +66,14 @@ export const useTodoStore = defineStore("todos", {
 		_displayedTodos: [],
 		_filter: "all",
 		_sort: SortState.UNSORTED,
-		maxId: 50, //todo fix this! useTodoStore._sourceTodos.length
+		maxId: 0,
 	}),
 	getters: {
 		todos: (state: State) => {
 			// sort it based on the current sort setting
 			const sortedTodos = state._displayedTodos;
 			sortedTodos.sort((a: Todo, b: Todo) => sortTodos(a, b, state._sort));
-
+			state.maxId == 0 && (state.maxId = sortedTodos.length);
 			// filter the results
 			switch (state._filter) {
 				case "unchecked": // unchecked todos
