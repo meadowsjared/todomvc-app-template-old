@@ -1,8 +1,8 @@
 <template>
 	<a
 		:class="{ selected: active }"
-		@click="$emit('click', label.value)"
 		href="#/"
+		@click="$emit('click', label.value)"
 		>{{ label.displayText }}</a
 	>
 </template>

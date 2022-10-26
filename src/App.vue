@@ -3,28 +3,28 @@
 		<header class="header">
 			<h1>todos</h1>
 			<input
+				v-model="newTodo"
 				class="new-todo"
-				@keypress.enter="handleAddTodo"
 				placeholder="What needs to be done?"
 				autofocus
-				v-model="newTodo"
+				@keypress.enter="handleAddTodo"
 			/>
 		</header>
 		<!-- This section should be hidden by default and shown when there are todos -->
 		<section class="main">
 			<input id="sort-todos" class="toggle-all" type="checkbox" />
 			<label
-				@click="sortTodos"
 				for="sort-todos"
+				class="sort-arrow"
 				:class="{
-					'sort-arrow': true,
 					'sort-arrow-right': sortState === SortState.UNSORTED,
 					'sort-arrow-up': sortState === SortState.ASCENDING,
 					'sort-arrow-down': sortState === SortState.DESCENDING,
 				}"
+				@click="sortTodos"
 				>Sort todos</label
 			>
-			<ul class="todo-list">
+			<ul v-if="todoStore.todos" class="todo-list">
 				<!-- These are here just to show the structure of the list items -->
 				<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
 				<Todo
@@ -32,6 +32,7 @@
 					:key="todo.id"
 					v-model="todoStore.todos[index]"
 					@destroy-todo="destroyTodo(todo)"
+					@update:model-value="todoUpdated"
 				/>
 			</ul>
 		</section>
@@ -48,46 +49,48 @@
 			<ul class="filters">
 				<li>
 					<Button
-						@click="setFilter"
+						type="button"
 						:active="'all' === todoStore.filter"
 						:label="{ displayText: 'All', value: 'all' }"
+						@click="setFilter"
 					/>
 				</li>
 				<li>
 					<Button
-						@click="setFilter"
+						type="button"
 						:active="'unchecked' === todoStore.filter"
 						:label="{ displayText: 'Unchecked', value: 'unchecked' }"
+						@click="setFilter"
 					/>
 				</li>
 				<li>
 					<Button
-						@click="setFilter"
+						type="button"
 						:active="'checked' === todoStore.filter"
 						:label="{ displayText: 'Checked', value: 'checked' }"
+						@click="setFilter"
 					/>
 				</li>
 			</ul>
 			<!-- Hidden if no completed items are left ↓ -->
-			<button @click="clearCompleted" class="clear-completed">
+			<button type="button" class="clear-completed" @click="clearCompleted">
 				Clear completed
 			</button>
 		</footer>
 	</section>
-	<div @click="showChecked">{{ todoStore.todos.length }}</div>
+	<div @click="showChecked">{{ todoStore.todos?.length }}</div>
 </template>
 
 <script setup lang="ts">
-import type { Ref } from "vue";
-import type { Todo } from "./domain/Todo";
 import { SortState } from "./domain/Todo";
 import { useTodoStore } from "./stores/todo-store";
+import type { Todo } from "./domain/Todo";
 
 const todoStore = useTodoStore();
 todoStore.loadData();
 
 const numbers = [1, 6, 4, 3, 23, 45, 76];
-let message: string = "hello world";
+let message = "hello world";
 console.log("should I S?");
 
 let sMessage: string = message.length > 5 ? "yes" : "no";
@@ -99,8 +102,8 @@ let sMessage: string = message.length > 5 ? "yes" : "no";
 function isAnagram(string1: string, string2: string): boolean {
 	// sort both strings
 	if (string1.length !== string2.length) return false;
-	const string1Sorted = string1.split("").sort().join(""); //get a sorted version of string1
-	const string2Sorted = string2.split("").sort().join(""); //get a sorted version of string1
+	const string1Sorted = [...string1].sort().join(""); //get a sorted version of string1
+	const string2Sorted = [...string2].sort().join(""); //get a sorted version of string1
 	return string1Sorted === string2Sorted;
 	// are the strings equal
 }
@@ -167,6 +170,10 @@ function handleAddTodo() {
 	console.log("addTodo", newTodo.value);
 	todoStore.addTodo(newTodo.value);
 	newTodo.value = "";
+}
+
+function todoUpdated(todo: Todo) {
+	todoStore.saveTodos();
 }
 
 console.log(message, 1, 5, numbers, todoStore.todos);
