@@ -19,10 +19,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);
 const db = getDatabase(app);
 // get a reference to the service
 const todosRef = ref(db, "todos");
 
-export { auth, todosRef, analytics };
+export { todosRef };
