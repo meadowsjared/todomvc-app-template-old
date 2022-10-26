@@ -109,7 +109,6 @@ export const useTodoStore = defineStore("todos", {
 			this.saveTodos();
 		},
 		loadData() {
-			// this._displayedTodos = this._sourceTodos;
 			onValue(todosRef, (snapshot) => {
 				const data = snapshot.val() as Todo[];
 				this._displayedTodos = data.filter((value) => value !== undefined);

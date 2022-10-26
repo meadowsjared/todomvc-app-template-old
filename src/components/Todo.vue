@@ -25,7 +25,6 @@ const emit = defineEmits(["update:modelValue", "destroyTodo"]);
 
 const checked = ref(props.modelValue.checked);
 const message = ref(props.modelValue.message);
-// props.modelValue.checked = false;
 
 watch(
 	() => message.value,
