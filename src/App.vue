@@ -24,7 +24,7 @@
 				@click="sortTodos"
 				>Sort todos</label
 			>
-			<ul class="todo-list">
+			<ul v-if="todoStore.todos" class="todo-list">
 				<!-- These are here just to show the structure of the list items -->
 				<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
 				<Todo
@@ -32,6 +32,7 @@
 					:key="todo.id"
 					v-model="todoStore.todos[index]"
 					@destroy-todo="destroyTodo(todo)"
+					@update:model-value="todosUpdated(todo)"
 				/>
 			</ul>
 		</section>
@@ -48,6 +49,7 @@
 			<ul class="filters">
 				<li>
 					<Button
+						type="button"
 						:active="'all' === todoStore.filter"
 						:label="{ displayText: 'All', value: 'all' }"
 						@click="setFilter"
@@ -55,6 +57,7 @@
 				</li>
 				<li>
 					<Button
+						type="button"
 						:active="'unchecked' === todoStore.filter"
 						:label="{ displayText: 'Unchecked', value: 'unchecked' }"
 						@click="setFilter"
@@ -62,6 +65,7 @@
 				</li>
 				<li>
 					<Button
+						type="button"
 						:active="'checked' === todoStore.filter"
 						:label="{ displayText: 'Checked', value: 'checked' }"
 						@click="setFilter"
@@ -69,19 +73,18 @@
 				</li>
 			</ul>
 			<!-- Hidden if no completed items are left ↓ -->
-			<button class="clear-completed" @click="clearCompleted">
+			<button type="button" class="clear-completed" @click="clearCompleted">
 				Clear completed
 			</button>
 		</footer>
 	</section>
-	<div @click="showChecked">{{ todoStore.todos.length }}</div>
+	<div @click="showChecked">{{ todoStore.todos?.length }}</div>
 </template>
 
 <script setup lang="ts">
 import { SortState } from "./domain/Todo";
 import { useTodoStore } from "./stores/todo-store";
 import type { Todo } from "./domain/Todo";
-import type { Ref } from "vue";
 
 const todoStore = useTodoStore();
 todoStore.loadData();
@@ -99,8 +102,8 @@ let sMessage: string = message.length > 5 ? "yes" : "no";
 function isAnagram(string1: string, string2: string): boolean {
 	// sort both strings
 	if (string1.length !== string2.length) return false;
-	const string1Sorted = string1.split("").sort().join(""); //get a sorted version of string1
-	const string2Sorted = string2.split("").sort().join(""); //get a sorted version of string1
+	const string1Sorted = [...string1].sort().join(""); //get a sorted version of string1
+	const string2Sorted = [...string2].sort().join(""); //get a sorted version of string1
 	return string1Sorted === string2Sorted;
 	// are the strings equal
 }
@@ -167,6 +170,10 @@ function handleAddTodo() {
 	console.log("addTodo", newTodo.value);
 	todoStore.addTodo(newTodo.value);
 	newTodo.value = "";
+}
+
+function todosUpdated(todo: Todo) {
+	todoStore.updateTodo(todo);
 }
 
 console.log(message, 1, 5, numbers, todoStore.todos);

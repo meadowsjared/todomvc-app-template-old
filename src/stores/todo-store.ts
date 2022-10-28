@@ -109,7 +109,7 @@ export const useTodoStore = defineStore("todos", {
 			}
 		},
 		loadData() {
-			// this._displayedTodos = this._sourceTodos;
+			// set up the firebase listener
 			onValue(todosRef, (snapshot) => {
 				const data = snapshot.val() as Todo[];
 				this._displayedTodos = data.filter((value) => value !== undefined);
