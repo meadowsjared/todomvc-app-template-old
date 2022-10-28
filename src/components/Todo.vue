@@ -27,6 +27,21 @@ const checked = ref(props.modelValue.checked);
 const message = ref(props.modelValue.message);
 // props.modelValue.checked = false;
 
+// handle updating externally
+watch(
+	() => props.modelValue,
+	(newVal) => {
+		if (newVal.checked !== checked.value) {
+			checked.value = newVal.checked;
+			console.log("updated checked externally");
+		}
+		if (newVal.message !== message.value) {
+			message.value = newVal.message;
+			console.log("updated text externally");
+		}
+	}
+);
+
 watch(
 	() => message.value,
 	(newMessage) => {
