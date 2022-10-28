@@ -21,4 +21,4 @@ const db = getDatabase(app);
 // get a reference to the service
 const todosRef = ref(db, "todos");
 
-export { todosRef };
+export { todosRef, db };

@@ -1,6 +1,6 @@
-import { onValue, set } from "firebase/database";
+import { onValue, set, ref } from "firebase/database";
 import { defineStore } from "pinia";
-import { todosRef } from "../domain/firebase";
+import { db, todosRef } from "../domain/firebase";
 import { SortState } from "../domain/Todo";
 import type { Todo } from "../domain/Todo";
 
@@ -94,7 +94,7 @@ export const useTodoStore = defineStore("todos", {
 	actions: {
 		destroyTodo(todo: Todo) {
 			todo.active = false;
-			this.saveTodos();
+			this.saveTodo(todo);
 		},
 		clearCompleted() {
 			// filter the todo list to only show the unchecked todos
@@ -105,7 +105,7 @@ export const useTodoStore = defineStore("todos", {
 				)) {
 					todo.active = false;
 				}
-				this.saveTodos();
+				this.saveAllTodos();
 			}
 		},
 		loadData() {
@@ -128,20 +128,21 @@ export const useTodoStore = defineStore("todos", {
 				(pTodo) => newTodo.id === pTodo.id
 			);
 			this._displayedTodos[index] = newTodo;
-			this.saveTodos();
+			this.saveTodo(newTodo);
 			// update persisted data
 		},
 		addTodo(newTodo: string) {
-			this._displayedTodos?.push({
+			const todo = {
 				checked: false,
 				message: newTodo,
 				active: true,
 				id: this.maxId++,
-			});
-			this.saveTodos();
+			};
+			this._displayedTodos?.push(todo);
+			this.saveTodo(todo);
 			console.log("adding todo from Pinia", newTodo);
 		},
-		saveTodos() {
+		saveAllTodos() {
 			set(todosRef, this._displayedTodos)
 				.then(() => {
 					console.log("Data saved successfully!");
@@ -149,6 +150,21 @@ export const useTodoStore = defineStore("todos", {
 				.catch((error) => {
 					console.warn("Data could not be saved." + error);
 				});
+		},
+		saveTodo(todo: Todo) {
+			const id = this._displayedTodos?.indexOf(todo);
+			if (id !== undefined) {
+				const todoRef = ref(db, "todos/" + id);
+				set(todoRef, todo)
+					.then(() => {
+						console.log(`Todo ${id} saved successfully!`);
+					})
+					.catch((error) => {
+						console.warn(`Todo ${id} could not be saved.`, error);
+					});
+			} else {
+				console.warn("Todo not found in list");
+			}
 		},
 	},
 });
