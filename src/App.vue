@@ -3,25 +3,25 @@
 		<header class="header">
 			<h1>todos</h1>
 			<input
+				v-model="newTodo"
 				class="new-todo"
-				@keypress.enter="handleAddTodo"
 				placeholder="What needs to be done?"
 				autofocus
-				v-model="newTodo"
+				@keypress.enter="handleAddTodo"
 			/>
 		</header>
 		<!-- This section should be hidden by default and shown when there are todos -->
 		<section class="main">
 			<input id="sort-todos" class="toggle-all" type="checkbox" />
 			<label
-				@click="sortTodos"
 				for="sort-todos"
+				class="sort-arrow"
 				:class="{
-					'sort-arrow': true,
 					'sort-arrow-right': sortState === SortState.UNSORTED,
 					'sort-arrow-up': sortState === SortState.ASCENDING,
 					'sort-arrow-down': sortState === SortState.DESCENDING,
 				}"
+				@click="sortTodos"
 				>Sort todos</label
 			>
 			<ul class="todo-list">
@@ -48,28 +48,28 @@
 			<ul class="filters">
 				<li>
 					<Button
-						@click="setFilter"
 						:active="'all' === todoStore.filter"
 						:label="{ displayText: 'All', value: 'all' }"
+						@click="setFilter"
 					/>
 				</li>
 				<li>
 					<Button
-						@click="setFilter"
 						:active="'unchecked' === todoStore.filter"
 						:label="{ displayText: 'Unchecked', value: 'unchecked' }"
+						@click="setFilter"
 					/>
 				</li>
 				<li>
 					<Button
-						@click="setFilter"
 						:active="'checked' === todoStore.filter"
 						:label="{ displayText: 'Checked', value: 'checked' }"
+						@click="setFilter"
 					/>
 				</li>
 			</ul>
 			<!-- Hidden if no completed items are left ↓ -->
-			<button @click="clearCompleted" class="clear-completed">
+			<button class="clear-completed" @click="clearCompleted">
 				Clear completed
 			</button>
 		</footer>
@@ -78,16 +78,16 @@
 </template>
 
 <script setup lang="ts">
-import type { Ref } from "vue";
-import type { Todo } from "./domain/Todo";
 import { SortState } from "./domain/Todo";
 import { useTodoStore } from "./stores/todo-store";
+import type { Todo } from "./domain/Todo";
+import type { Ref } from "vue";
 
 const todoStore = useTodoStore();
 todoStore.loadData();
 
 const numbers = [1, 6, 4, 3, 23, 45, 76];
-let message: string = "hello world";
+let message = "hello world";
 console.log("should I S?");
 
 let sMessage: string = message.length > 5 ? "yes" : "no";

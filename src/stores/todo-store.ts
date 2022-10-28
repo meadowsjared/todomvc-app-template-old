@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import type { Todo } from "../domain/Todo";
 import { SortState } from "../domain/Todo";
+import type { Todo } from "../domain/Todo";
 
 interface State {
 	_sourceTodos: Todo[];
@@ -96,11 +96,9 @@ export const useTodoStore = defineStore("todos", {
 			// filter the todo list to only show the unchecked todos
 			// this._displayedTodos = this._sourceTodos.filter((todo) => !todo.checked);
 
-			this._displayedTodos
-				.filter((todo) => todo.checked)
-				.forEach((todo) => {
-					todo.active = false;
-				});
+			for (const todo of this._displayedTodos.filter((todo) => todo.checked)) {
+				todo.active = false;
+			}
 		},
 		loadData() {
 			this._displayedTodos = this._sourceTodos;
