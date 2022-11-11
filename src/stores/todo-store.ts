@@ -1,4 +1,4 @@
-import { onValue, set, ref } from "firebase/database";
+import { onValue, set, ref, remove } from "firebase/database";
 import { defineStore } from "pinia";
 import { db, todosRef } from "../domain/firebase";
 import { SortState } from "../domain/Todo";
@@ -93,8 +93,16 @@ export const useTodoStore = defineStore("todos", {
 	},
 	actions: {
 		destroyTodo(todo: Todo) {
+			console.log("destroying todo", todo);
+			const todoRef = ref(db, "todos/" + todo.id);
+			remove(todoRef)
+				.then(() => {
+					console.log(`Todo ${todo.id} saved successfully!`);
+				})
+				.catch((error) => {
+					console.warn(`Todo ${todo.id} could not be saved.`, error);
+				});
 			todo.active = false;
-			this.saveTodo(todo);
 		},
 		clearCompleted() {
 			// filter the todo list to only show the unchecked todos
