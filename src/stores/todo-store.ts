@@ -76,7 +76,6 @@ export const useTodoStore = defineStore("todos", {
 			// sort it based on the current sort setting
 			const sortedTodos = state._displayedTodos;
 			sortedTodos.sort((a: Todo, b: Todo) => sortTodos(a, b, state._sort));
-			state.maxId === 0 && (state.maxId = sortedTodos.length);
 			// filter the results
 			switch (state._filter) {
 				case "unchecked": // unchecked todos
@@ -122,6 +121,14 @@ export const useTodoStore = defineStore("todos", {
 				const data = snapshot.val() as Todo[];
 				this._displayedTodos = data.filter((value) => value !== undefined);
 				console.log("this._displayedTodos", this._displayedTodos);
+				const highestId = this._displayedTodos.reduce((canId, todo) => {
+					if (todo.id > canId) return todo.id;
+					return canId;
+				}, 0);
+				console.log({ highestId });
+
+				this.maxId = highestId + 1;
+				console.log("this.maxId", this.maxId);
 			});
 		},
 		setFilter(filter: string) {
