@@ -28,9 +28,13 @@
 				<!-- These are here just to show the structure of the list items -->
 				<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
 				<Todo
-					v-for="(todo, index) of todoStore.todos"
+					v-for="todo of todoStore.todos"
 					:key="todo.id"
-					v-model="todoStore.todos[index]"
+					v-model="
+						todoStore.todos[
+							todoStore.todos.findIndex((pTodo) => todo.id === pTodo.id)
+						]
+					"
 					@destroy-todo="destroyTodo(todo)"
 					@update:model-value="todosUpdated(todo)"
 				/>
