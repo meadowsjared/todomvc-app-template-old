@@ -2,7 +2,6 @@ export interface Todo {
 	checked: boolean;
 	message: string;
 	id: number;
-	active: boolean;
 	key: number;
 }
 
