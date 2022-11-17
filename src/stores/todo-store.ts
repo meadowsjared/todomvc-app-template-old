@@ -104,13 +104,10 @@ export const useTodoStore = defineStore("todos", {
 		},
 		clearCompleted() {
 			// filter the todo list to only show the unchecked todos
-			// this._displayedTodos = this._sourceTodos.filter((todo) => !todo.checked);
 			if (this._displayedTodos) {
-				for (const todo of this._displayedTodos.filter(
-					(todo) => todo.checked
-				)) {
-					todo.active = false;
-				}
+				this._displayedTodos = this._displayedTodos.filter(
+					(todo) => !todo.checked
+				);
 				this.saveAllTodos();
 			}
 		},
