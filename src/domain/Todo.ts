@@ -3,6 +3,7 @@ export interface Todo {
 	message: string;
 	id: number;
 	active: boolean;
+	key: number;
 }
 
 export interface Label {
