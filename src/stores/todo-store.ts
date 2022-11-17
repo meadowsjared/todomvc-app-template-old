@@ -33,41 +33,36 @@ function sortTodos(a: Todo, b: Todo, sortState: SortState) {
 export const useTodoStore = defineStore("todos", {
 	state: (): State => ({
 		_sourceTodos: [
-			{ checked: true, message: "adding todos!", id: 0, key: 0, active: true },
+			{ checked: true, message: "adding todos!", id: 0, key: 0 },
 			{
 				checked: false,
 				message: "add saving and persisting data",
 				id: 1,
 				key: 1,
-				active: true,
 			},
 			{
 				checked: true,
 				message: "do fancy chevron-ing (CSS)",
 				id: 2,
 				key: 2,
-				active: true,
 			},
 			{
 				checked: true,
 				message: "fix funky active junk",
 				id: 3,
 				key: 3,
-				active: true,
 			},
 			{
 				checked: true,
 				message: "figure out sorting",
 				id: 4,
 				key: 4,
-				active: true,
 			},
 			{
 				checked: true,
 				message: "sorting from chevron button",
 				id: 5,
 				key: 5,
-				active: true,
 			},
 		],
 		_displayedTodos: [],
@@ -106,7 +101,6 @@ export const useTodoStore = defineStore("todos", {
 				.catch((error) => {
 					console.warn(`Todo ${todo.id} could not be saved.`, error);
 				});
-			todo.active = false;
 		},
 		clearCompleted() {
 			// filter the todo list to only show the unchecked todos
