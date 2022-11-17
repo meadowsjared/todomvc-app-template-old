@@ -163,6 +163,11 @@ export const useTodoStore = defineStore("todos", {
 			console.log("adding todo from Pinia", newTodo);
 		},
 		saveAllTodos() {
+			// reset our keys to match the array
+			this._displayedTodos?.forEach((todo, index) => {
+				todo.key = index;
+			});
+			// save it to firebase
 			set(todosRef, this._displayedTodos)
 				.then(() => {
 					console.log("Data saved successfully!");
