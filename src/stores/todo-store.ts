@@ -33,35 +33,40 @@ function sortTodos(a: Todo, b: Todo, sortState: SortState) {
 export const useTodoStore = defineStore("todos", {
 	state: (): State => ({
 		_sourceTodos: [
-			{ checked: true, message: "adding todos!", id: 0, active: true },
+			{ checked: true, message: "adding todos!", id: 0, key: 0, active: true },
 			{
 				checked: false,
 				message: "add saving and persisting data",
 				id: 1,
+				key: 1,
 				active: true,
 			},
 			{
 				checked: true,
 				message: "do fancy chevron-ing (CSS)",
 				id: 2,
+				key: 2,
 				active: true,
 			},
 			{
 				checked: true,
 				message: "fix funky active junk",
 				id: 3,
+				key: 3,
 				active: true,
 			},
 			{
 				checked: true,
 				message: "figure out sorting",
 				id: 4,
+				key: 4,
 				active: true,
 			},
 			{
 				checked: true,
 				message: "sorting from chevron button",
 				id: 5,
+				key: 5,
 				active: true,
 			},
 		],
@@ -93,7 +98,7 @@ export const useTodoStore = defineStore("todos", {
 	actions: {
 		destroyTodo(todo: Todo) {
 			console.log("destroying todo", todo);
-			const todoRef = ref(db, "todos/" + todo.id);
+			const todoRef = ref(db, "todos/" + todo.key);
 			remove(todoRef)
 				.then(() => {
 					console.log(`Todo ${todo.id} saved successfully!`);
@@ -118,7 +123,11 @@ export const useTodoStore = defineStore("todos", {
 		loadData() {
 			// set up the firebase listener
 			onValue(todosRef, (snapshot) => {
-				const data = snapshot.val() as Todo[];
+				const data = (snapshot.val() as Todo[]).map((todo, index) => {
+					todo.key = index; // save the key it's stored under firebase
+					return todo;
+				});
+				// transfer the keys to the todo objects
 				this._displayedTodos = data.filter((value) => value !== undefined);
 				console.log("this._displayedTodos", this._displayedTodos);
 				const highestId = this._displayedTodos.reduce((canId, todo) => {
@@ -152,6 +161,11 @@ export const useTodoStore = defineStore("todos", {
 				message: newTodo,
 				active: true,
 				id: this.maxId++,
+				key:
+					(this._displayedTodos?.reduce((highestKey, todo) => {
+						if (todo.key > highestKey) return todo.key;
+						return todo.key;
+					}, 0) ?? -1) + 1, // todo - backfill this key when it's updated from firebase
 			};
 			this._displayedTodos?.push(todo);
 			this.saveTodo(todo);
@@ -167,19 +181,14 @@ export const useTodoStore = defineStore("todos", {
 				});
 		},
 		saveTodo(todo: Todo) {
-			const id = this._displayedTodos?.indexOf(todo);
-			if (id !== undefined) {
-				const todoRef = ref(db, "todos/" + id);
-				set(todoRef, todo)
-					.then(() => {
-						console.log(`Todo ${id} saved successfully!`);
-					})
-					.catch((error) => {
-						console.warn(`Todo ${id} could not be saved.`, error);
-					});
-			} else {
-				console.warn("Todo not found in list");
-			}
+			const todoRef = ref(db, "todos/" + todo.key);
+			set(todoRef, todo)
+				.then(() => {
+					console.log(`Todo ${todo.key} saved successfully!`);
+				})
+				.catch((error) => {
+					console.warn(`Todo ${todo.key} could not be saved.`, error);
+				});
 		},
 	},
 });
