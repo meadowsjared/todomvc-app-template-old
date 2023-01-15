@@ -15,6 +15,7 @@
 			<input id="sort-todos" class="toggle-all" type="checkbox" />
 			<label
 				for="sort-todos"
+				title="Sort todos"
 				class="sort-arrow"
 				:class="{
 					'sort-arrow-right': sortState === SortState.UNSORTED,
@@ -38,6 +39,7 @@
 					@destroy-todo="destroyTodo(todo)"
 					@update:model-value="todosUpdated(todo)"
 				/>
+				<empty-todos v-if="todoStore.todos.length === 0" />
 			</ul>
 		</section>
 		<!-- This footer should be hidden by default and shown when there are todos -->
@@ -184,6 +186,9 @@ console.log(message, 1, 5, numbers, todoStore.todos);
 </script>
 
 <style scoped>
+.toggle-all, label.sort-arrow {
+	cursor: pointer;
+}
 label.sort-arrow-right::before {
 	transform: rotate(0deg);
 }
