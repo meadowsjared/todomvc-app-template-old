@@ -3,6 +3,7 @@
 		<header class="header">
 			<h1>Jared's Todos</h1>
 			<input
+				type="text"
 				v-model="newTodo"
 				class="new-todo"
 				placeholder="What needs to be done?"
@@ -135,8 +136,10 @@ function sortTodos() {
 }
 
 function handleAddTodo() {
-	todoStore.addTodo(newTodo.value);
-	newTodo.value = "";
+	setTimeout(() => {
+		todoStore.addTodo(newTodo.value);
+		newTodo.value = "";
+	}, 0);
 }
 
 function todosUpdated(todo: Todo) {
