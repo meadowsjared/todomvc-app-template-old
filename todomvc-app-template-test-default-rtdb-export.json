@@ -46,6 +46,24 @@
       "id": 15,
       "key": 13,
       "message": "test loading them with no data! 💥"
+    },
+    {
+      "checked": true,
+      "id": 16,
+      "key": 14,
+      "message": "fix pnpm build ✅"
+    },
+    {
+      "checked": true,
+      "id": 17,
+      "key": 15,
+      "message": "deploy to GitHub pages"
+    },
+    {
+      "checked": true,
+      "id": 18,
+      "key": 16,
+      "message": "test the app"
     }
   ]
 }
