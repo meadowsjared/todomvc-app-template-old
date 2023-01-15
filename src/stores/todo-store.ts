@@ -147,10 +147,9 @@ export const useTodoStore = defineStore("todos", {
 			// update persisted data
 		},
 		addTodo(newTodo: string) {
-			const todo = {
+			const todo: Todo = {
 				checked: false,
 				message: newTodo,
-				active: true,
 				id: this.maxId++,
 				key:
 					(this._displayedTodos?.reduce((highestKey, todo) => {
