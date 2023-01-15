@@ -1,0 +1,51 @@
+{
+  "todos": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "checked": true,
+      "id": 6,
+      "message": "add firebase integration"
+    },
+    {
+      "checked": true,
+      "id": 7,
+      "message": "fix strikethrough not updating (from 2 windows)"
+    },
+    {
+      "checked": true,
+      "id": 10,
+      "key": 8,
+      "message": "fix clear completed"
+    },
+    {
+      "checked": true,
+      "id": 11,
+      "key": 9,
+      "message": "set up DayCHU with saveAllTodos vs saveTodo"
+    },
+    {
+      "checked": true,
+      "id": 12,
+      "key": 10,
+      "message": "remove sourceTodos"
+    },
+    null,
+    {
+      "checked": true,
+      "id": 14,
+      "key": 12,
+      "message": "create onboarding starting/default todos"
+    },
+    {
+      "checked": true,
+      "id": 15,
+      "key": 13,
+      "message": "test loading them with no data! 💥"
+    }
+  ]
+}
