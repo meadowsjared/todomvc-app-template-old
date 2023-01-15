@@ -30,14 +30,12 @@ function sortTodos(a: Todo, b: Todo, sortState: SortState) {
 }
 
 function loadTodosFromSnapshot(snapshot: DataSnapshot): Todo[] {
-	console.log("snapshot", snapshot.val())
 	// get the data from firebase
 	// const data = (snapshot.val() as Todo[] | null)?.map?.((todo, index) => {
 	const data: Todo[] | undefined = snapshot.val() && Object.entries(snapshot.val() as { [key:number]: Todo }).map(([key, todo]) => {
 		todo.key = parseInt(key); // save the key it's stored under firebase
 		return todo;
 	});
-	console.log("data", data)
 	// transfer the keys to the todo objects
 	return data?.filter((value) => value !== undefined) ?? [];
 }
@@ -81,11 +79,10 @@ export const useTodoStore = defineStore("todos", {
 	},
 	actions: {
 		destroyTodo(todo: Todo) {
-			console.log("destroying todo", todo);
 			const todoRef = ref(db, "todos/" + todo.key);
 			remove(todoRef)
 				.then(() => {
-					console.log(`Todo ${todo.id} saved successfully!`);
+					// console.log(`Todo ${todo.id} saved successfully!`);
 				})
 				.catch((error) => {
 					console.warn(`Todo ${todo.id} could not be saved.`, error);
@@ -104,17 +101,16 @@ export const useTodoStore = defineStore("todos", {
 			// set up the firebase listener
 			onValue(todosRef, (snapshot) => {
 				this._displayedTodos = loadTodosFromSnapshot(snapshot);
-				console.log("this._displayedTodos", this._displayedTodos);
+				// console.log("this._displayedTodos", this._displayedTodos);
 
 				// find the highest id
 				const highestId = this._displayedTodos.reduce((canId, todo) => {
 					if (todo.id > canId) return todo.id;
 					return canId;
 				}, 0);
-				console.log({ highestId });
 
 				this.maxId = highestId + 1;
-				console.log("this.maxId", this.maxId);
+				// console.log("this.maxId", this.maxId);
 			});
 		},
 		setFilter(filter: string) {
@@ -145,7 +141,6 @@ export const useTodoStore = defineStore("todos", {
 			};
 			this._displayedTodos?.push(todo);
 			this.saveTodo(todo);
-			console.log("adding todo from Pinia", newTodo);
 		},
 		saveAllTodos() {
 			// reset our keys to match the array
@@ -155,7 +150,7 @@ export const useTodoStore = defineStore("todos", {
 			// save it to firebase
 			set(todosRef, this._displayedTodos)
 				.then(() => {
-					console.log("Data saved successfully!");
+					// console.log("Data saved successfully!");
 				})
 				.catch((error) => {
 					console.warn("Data could not be saved." + error);
@@ -165,7 +160,7 @@ export const useTodoStore = defineStore("todos", {
 			const todoRef = ref(db, "todos/" + todo.key);
 			set(todoRef, todo)
 				.then(() => {
-					console.log(`Todo ${todo.key} saved successfully!`);
+					// console.log(`Todo ${todo.key} saved successfully!`);
 				})
 				.catch((error) => {
 					console.warn(`Todo ${todo.key} could not be saved.`, error);

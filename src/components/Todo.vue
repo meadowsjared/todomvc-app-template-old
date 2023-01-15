@@ -26,7 +26,6 @@ const emit = defineEmits(["update:modelValue", "destroyTodo"]);
 
 const checked = ref(props.modelValue.checked);
 const message = ref(props.modelValue.message);
-// props.modelValue.checked = false;
 
 // handle updating externally
 watch(
@@ -34,11 +33,9 @@ watch(
 	(newVal) => {
 		if (newVal.checked !== checked.value) {
 			checked.value = newVal.checked;
-			console.log("updated checked externally");
 		}
 		if (newVal.message !== message.value) {
 			message.value = newVal.message;
-			console.log("updated text externally");
 		}
 	}
 );
@@ -46,7 +43,6 @@ watch(
 watch(
 	() => message.value,
 	(newMessage) => {
-		console.log("newMessage", newMessage);
 		const newValue = props.modelValue;
 		newValue.message = newMessage;
 		emit("update:modelValue", newValue);
@@ -54,7 +50,6 @@ watch(
 );
 
 function toggleChecked() {
-	console.log("toggleChecked", props.modelValue.checked);
 	const newValue = props.modelValue;
 	newValue.checked = props.modelValue.checked;
 	checked.value = props.modelValue.checked;
@@ -63,7 +58,6 @@ function toggleChecked() {
 
 function destroy() {
 	emit("destroyTodo");
-	console.log("destroy", props.modelValue.id);
 }
 </script>
 

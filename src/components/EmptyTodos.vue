@@ -11,7 +11,6 @@ const todoStore = useTodoStore();
 
 function loadOnboardingTodos() {
   todoStore.loadOnboardingTodos();
-  console.log("loadOnboardingTodos");
 }
 </script>
 

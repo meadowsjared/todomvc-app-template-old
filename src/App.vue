@@ -94,38 +94,10 @@ import type { Todo } from "./domain/Todo";
 const todoStore = useTodoStore();
 todoStore.loadData();
 
-const numbers = [1, 6, 4, 3, 23, 45, 76];
-let message = "hello world";
-console.log("should I S?");
-
-let sMessage: string = message.length > 5 ? "yes" : "no";
-
-/**
- * Write a function that, given two strings, can detect if they are anagrams of each other.
- * For example: Given the input "heart" and "earth", the function should return true because their letters can be rearranged to create each other.
- */
-function isAnagram(string1: string, string2: string): boolean {
-	// sort both strings
-	if (string1.length !== string2.length) return false;
-	const string1Sorted = [...string1].sort().join(""); //get a sorted version of string1
-	const string2Sorted = [...string2].sort().join(""); //get a sorted version of string1
-	return string1Sorted === string2Sorted;
-	// are the strings equal
-}
-
-console.log("heart is anagram of earth?", isAnagram("heart", "earth"));
-console.log("stuff is anagram of things?", isAnagram("stuff", "things"));
-
-console.log("should I S?", sMessage);
-
 const numUpdates = ref(0);
 
 const sortState = ref<SortState>(SortState.UNSORTED);
 const newTodo = ref("");
-
-function showChecked() {
-	console.log("showChecked");
-}
 
 function destroyTodo(todo: Todo) {
 	todoStore.destroyTodo(todo);
@@ -151,28 +123,18 @@ function setFilter(filter: string) {
 	todoStore.setFilter(filter);
 }
 
-// three possible states
-// 1. unsorted
-// 2. sorted by checked (ascending)
-// 3. sorted by checked (descending)
-
+/**
+ * There are three possible states:
+ * 1. unsorted
+ * 2. sorted by checked (ascending)
+ * 3. sorted by checked (descending)
+ */
 function sortTodos() {
 	sortState.value = (sortState.value + 1) % 3;
-	if (sortState.value === SortState.UNSORTED) {
-		console.log("sortTodos", "SortState.UNSORTED");
-	}
-	if (sortState.value === SortState.ASCENDING) {
-		console.log("sortTodos", "SortState.ASCENDING");
-	}
-	if (sortState.value === SortState.DESCENDING) {
-		console.log("sortTodos", "SortState.DESCENDING");
-	}
-
 	todoStore.setSort(sortState.value);
 }
 
 function handleAddTodo() {
-	console.log("addTodo", newTodo.value);
 	todoStore.addTodo(newTodo.value);
 	newTodo.value = "";
 }
@@ -181,7 +143,6 @@ function todosUpdated(todo: Todo) {
 	todoStore.updateTodo(todo);
 }
 
-console.log(message, 1, 5, numbers, todoStore.todos);
 </script>
 
 <style scoped>
