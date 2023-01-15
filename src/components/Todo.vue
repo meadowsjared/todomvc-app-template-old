@@ -1,5 +1,5 @@
 <template>
-	<li :class="{ completed: checked }">
+	<li>
 		<div class="view">
 			<input
 				v-model="props.modelValue.checked"
@@ -8,7 +8,7 @@
 				type="checkbox"
 				@update:modelValue="toggleChecked"
 			/>
-			<label><input v-model="message" type="text" /></label>
+			<label><input v-model="message" type="text" :class="{ 'completed': checked }" /></label>
 			<button class="destroy" title="delete todo" @click="destroy"></button>
 		</div>
 		<input class="edit" value="Create a TodoMVC template" />
@@ -64,5 +64,10 @@ function destroy() {
 <style scoped>
 .toggle, .destroy {
 	cursor: pointer;
+}
+
+.completed {
+	color: #949494;
+	text-decoration: line-through;
 }
 </style>
