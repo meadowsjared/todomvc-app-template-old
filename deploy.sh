@@ -3,7 +3,7 @@
 # abort on errors
 set -e
 
-npm run build
+pnpm run build
 
 cd dist
 
@@ -11,6 +11,6 @@ git init
 git checkout gh-pages
 git add -A
 git commit -m 'new deployment'
-git push -f git@github.com/meadowsjared/todomvc-app-template.git gh-pages:gh-pages
+git push -f ssh://git@github.com/meadowsjared/todomvc-app-template.git gh-pages:gh-pages
 
 cd -
