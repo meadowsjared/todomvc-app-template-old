@@ -6,7 +6,7 @@
 				class="toggle"
 				title="click to toggle checked"
 				type="checkbox"
-				@update:modelValue="toggleChecked"
+				@update:model-value="toggleChecked"
 			/>
 			<label><input v-model="message" type="text" :class="{ 'completed': checked }" /></label>
 			<button class="destroy" title="delete todo" @click="destroy"></button>
