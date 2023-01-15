@@ -4,11 +4,12 @@
 			<input
 				v-model="props.modelValue.checked"
 				class="toggle"
+				title="click to toggle checked"
 				type="checkbox"
 				@update:modelValue="toggleChecked"
 			/>
 			<label><input v-model="message" type="text" /></label>
-			<button class="destroy" @click="destroy"></button>
+			<button class="destroy" title="delete todo" @click="destroy"></button>
 		</div>
 		<input class="edit" value="Create a TodoMVC template" />
 	</li>
@@ -65,3 +66,9 @@ function destroy() {
 	console.log("destroy", props.modelValue.id);
 }
 </script>
+
+<style scoped>
+.toggle, .destroy {
+	cursor: pointer;
+}
+</style>
