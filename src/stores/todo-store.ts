@@ -1,7 +1,7 @@
-import { onValue, set, ref, remove } from "firebase/database";
+import { onValue, set, ref, remove, DataSnapshot } from "firebase/database";
 import { defineStore } from "pinia";
 import { db, todosRef } from "../domain/firebase";
-import { SortState } from "../domain/Todo";
+import { SortState, newOnboardingTodo } from '../domain/Todo'
 import type { Todo } from "../domain/Todo";
 
 interface State {
@@ -27,6 +27,29 @@ function sortTodos(a: Todo, b: Todo, sortState: SortState) {
 			if (a.id > b.id) return 1;
 			return -1;
 	}
+}
+
+function loadTodosFromSnapshot(snapshot: DataSnapshot): Todo[] {
+	console.log("snapshot", snapshot.val())
+	// get the data from firebase
+	// const data = (snapshot.val() as Todo[] | null)?.map?.((todo, index) => {
+	const data: Todo[] | undefined = snapshot.val() && Object.entries(snapshot.val() as { [key:number]: Todo }).map(([key, todo]) => {
+		todo.key = parseInt(key); // save the key it's stored under firebase
+		return todo;
+	});
+	console.log("data", data)
+	// transfer the keys to the todo objects
+	return data?.filter((value) => value !== undefined) ?? [];
+}
+
+function getOnboardingTodos(): Todo[] {
+	const todos: Todo[] = [
+		newOnboardingTodo("Welcome to TodoMVC", 0),
+		newOnboardingTodo("This is a sample todo", 1),
+		newOnboardingTodo("Click on the words to edit a todo", 2),
+		newOnboardingTodo("Click on the X to delete a todo", 3),
+	];
+	return todos;
 }
 
 export const useTodoStore = defineStore("todos", {
@@ -80,13 +103,10 @@ export const useTodoStore = defineStore("todos", {
 		loadData() {
 			// set up the firebase listener
 			onValue(todosRef, (snapshot) => {
-				const data = (snapshot.val() as Todo[]).map((todo, index) => {
-					todo.key = index; // save the key it's stored under firebase
-					return todo;
-				});
-				// transfer the keys to the todo objects
-				this._displayedTodos = data.filter((value) => value !== undefined);
+				this._displayedTodos = loadTodosFromSnapshot(snapshot);
 				console.log("this._displayedTodos", this._displayedTodos);
+
+				// find the highest id
 				const highestId = this._displayedTodos.reduce((canId, todo) => {
 					if (todo.id > canId) return todo.id;
 					return canId;
@@ -151,5 +171,9 @@ export const useTodoStore = defineStore("todos", {
 					console.warn(`Todo ${todo.key} could not be saved.`, error);
 				});
 		},
+		loadOnboardingTodos() {
+			this._displayedTodos = getOnboardingTodos();
+			this.saveAllTodos();
+		}
 	},
 });
