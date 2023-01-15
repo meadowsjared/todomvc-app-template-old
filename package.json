@@ -6,7 +6,7 @@
     "check": "run-s check:* lint",
     "check:vue": "vue-tsc --noEmit",
     "check:eslint": "eslint src",
-    "deploy": "sh deploy.sh"
+    "publish": "sh deploy.sh"
   },
   "private": true,
   "dependencies": {
