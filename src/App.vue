@@ -1,7 +1,7 @@
 <template>
 	<section class="todoapp">
 		<header class="header">
-			<h1>todos</h1>
+			<h1>Jared's Todos</h1>
 			<input
 				v-model="newTodo"
 				class="new-todo"
