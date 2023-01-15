@@ -84,7 +84,6 @@
 			</button>
 		</footer>
 	</section>
-	<div @click="showChecked">{{ todoStore.todos?.length }}</div>
 </template>
 
 <script setup lang="ts">
