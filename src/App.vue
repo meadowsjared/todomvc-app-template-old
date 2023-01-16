@@ -1,6 +1,6 @@
 <template>
 	<section class="todoapp">
-		<header class="header">
+		<form class="header" @submit.prevent="handleAddTodo">
 			<h1>Jared's Todos</h1>
 			<input
 				type="text"
@@ -8,10 +8,8 @@
 				class="new-todo"
 				placeholder="What needs to be done?"
 				autofocus
-				@keypress.enter="handleAddTodo"
-				@keypress.tab="handleAddTodo"
 			/>
-		</header>
+		</form>
 		<!-- This section should be hidden by default and shown when there are todos -->
 		<section class="main">
 			<input id="sort-todos" class="toggle-all" type="checkbox" />
