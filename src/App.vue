@@ -9,6 +9,7 @@
 				placeholder="What needs to be done?"
 				autofocus
 				@keypress.enter="handleAddTodo"
+				@keypress.tab="handleAddTodo"
 			/>
 		</header>
 		<!-- This section should be hidden by default and shown when there are todos -->
