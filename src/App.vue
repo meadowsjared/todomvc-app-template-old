@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { SortState } from "./domain/Todo";
+import { SortState as SortStateEnum } from './domain/Todo'
 import { useTodoStore } from "./stores/todo-store";
 import type { Todo } from "./domain/Todo";
 
@@ -95,8 +95,8 @@ const todoStore = useTodoStore();
 todoStore.loadData();
 
 const numUpdates = ref(0);
-
-const sortState = ref<SortState>(SortState.ASCENDING);
+const SortState = SortStateEnum;
+const sortState = ref<SortStateEnum>(todoStore.sort);
 const newTodo = ref("");
 
 function destroyTodo(todo: Todo) {
