@@ -96,7 +96,7 @@ todoStore.loadData();
 
 const numUpdates = ref(0);
 
-const sortState = ref<SortState>(SortState.UNSORTED);
+const sortState = ref<SortState>(SortState.ASCENDING);
 const newTodo = ref("");
 
 function destroyTodo(todo: Todo) {
