@@ -54,7 +54,7 @@ export const useTodoStore = defineStore("todos", {
 	state: (): State => ({
 		_displayedTodos: [],
 		_filter: "all",
-		_sort: SortState.UNSORTED,
+		_sort: SortState.ASCENDING,
 		maxId: 0,
 	}),
 	getters: {
@@ -76,6 +76,7 @@ export const useTodoStore = defineStore("todos", {
 		tasksLeft: (state: State) =>
 			state._displayedTodos?.filter((todo) => !todo.checked).length ?? 0,
 		filter: (state: State) => state._filter,
+		sort: (state: State) => state._sort,
 	},
 	actions: {
 		destroyTodo(todo: Todo) {
