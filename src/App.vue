@@ -1,10 +1,10 @@
 <template>
+	<h1>Jared's Todos</h1>
 	<section class="todoapp">
 		<form class="header" @submit.prevent="handleAddTodo">
-			<h1>Jared's Todos</h1>
 			<input
-				type="text"
 				v-model="newTodo"
+				type="text"
 				class="new-todo"
 				placeholder="What needs to be done?"
 				autofocus
@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { SortState as SortStateEnum } from './domain/Todo'
+import { SortState as SortStateEnum } from "./domain/Todo";
 import { useTodoStore } from "./stores/todo-store";
 import type { Todo } from "./domain/Todo";
 
@@ -144,11 +144,11 @@ function handleAddTodo() {
 function todosUpdated(todo: Todo) {
 	todoStore.updateTodo(todo);
 }
-
 </script>
 
 <style scoped>
-.toggle-all, label.sort-arrow {
+.toggle-all,
+label.sort-arrow {
 	cursor: pointer;
 }
 label.sort-arrow-right::before {
