@@ -8,7 +8,9 @@
 				type="checkbox"
 				@update:model-value="toggleChecked"
 			/>
-			<label><input v-model="message" type="text" :class="{ 'completed': checked }" /></label>
+			<label
+				><input v-model="message" type="text" :class="{ completed: checked }"
+			/></label>
 			<button class="destroy" title="delete todo" @click="destroy" />
 		</div>
 		<input class="edit" value="Create a TodoMVC template" />
@@ -73,7 +75,7 @@ function destroy() {
 
 @media screen and (max-width: 700px) {
 	button.destroy {
-		display: block;
+		display: flex;
 	}
 }
 </style>
